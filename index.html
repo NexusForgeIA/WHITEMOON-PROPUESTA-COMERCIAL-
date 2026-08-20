@@ -672,14 +672,14 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       <span class="ghost" aria-hidden="true">03</span>
       <p class="eyebrow">Así se vería en tu sector</p>
       <h2>No te lo contamos:<br><span class="grad">pruébalo tú</span></h2>
-      <p class="lead">Quince sectores, quince agentes distintos. Busca el tuyo, ábrelo y <strong>háblale como lo haría un cliente tuyo</strong>. Verás lo que vería él.</p>
+      <p class="lead">Dieciocho sectores, dieciocho agentes distintos. Busca el tuyo, ábrelo y <strong>háblale como lo haría un cliente tuyo</strong>. Verás lo que vería él.</p>
 
       <div class="searchbar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
         <label class="sr-only" for="demo-q">Busca tu sector</label>
         <input id="demo-q" type="search" autocomplete="off" placeholder="Busca tu sector: dental, taller, abogados…">
       </div>
-      <p class="count" id="demo-count" role="status">15 demos disponibles</p>
+      <p class="count" id="demo-count" role="status">18 demos disponibles</p>
 
       <div class="grid demos" id="demos"></div>
       <p class="empty" id="demo-empty" hidden>No tenemos una demo con ese nombre. Prueba otra palabra, o bórrala para verlas todas: el de tu sector se monta a medida igual.</p>
@@ -724,7 +724,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
         <details class="faq">
           <summary><h3>¿De verdad funciona o es humo?</h3></summary>
           <div class="faq__body">
-            <p>No hace falta que te fíes de nuestra palabra. Vuelve un paso atrás y habla tú con cualquiera de las quince demos: son agentes reales funcionando, no vídeos ni maquetas.</p>
+            <p>No hace falta que te fíes de nuestra palabra. Vuelve un paso atrás y habla tú con cualquiera de las dieciocho demos: son agentes reales funcionando, no vídeos ni maquetas.</p>
             <p>Lo que veas ahí es exactamente lo que tendrías, con las preguntas y el flujo de tu sector.</p>
             <button type="button" class="btn btn--ghost" data-go="3">Volver a las demos</button>
           </div>
@@ -937,11 +937,14 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   var DEMOS = [
     {s:"Clínicas dentales", a:"Marcos", d:"Pide la primera visita y elige hueco sin salir del chat.", u:"https://nexusforgeia.github.io/WHITEMOON-CLINICAS-DENTALES/", k:"dental dentista clinica odontologia salud"},
     {s:"Podología", a:"ANA", d:"Dile qué tratamiento necesitas y te busca un hueco real.", u:"https://nexusforgeia.github.io/WHITEMOON-PODOLOGOS/", k:"podologo podologia pies salud clinica"},
+    {s:"Psicología", a:"Clara", d:"Cuenta qué te preocupa y deja pedida la primera consulta, a tu ritmo.", u:"https://nexusforgeia.github.io/WHITEMOON-PSICOLOGIA/", k:"psicologia psicologo psicologa terapia terapeuta salud mental consulta ansiedad"},
     {s:"Estética", a:"Ana", d:"Cuenta qué te quieres cuidar y deja la cita solicitada sin llamar.", u:"https://nexusforgeia.github.io/WHITEMOON-ESTETICA/", k:"estetica belleza centro spa clinica"},
+    {s:"Tatuajes", a:"Neo", d:"Cuenta tu idea, el estilo y la zona, y te prepara el boceto sin compromiso.", u:"https://nexusforgeia.github.io/WHITEMOON-TATUAJES-DEMO/", k:"tatuaje tatuajes tatuador tattoo estudio tinta piercing arte"},
     {s:"Veterinarios", a:"NORA", d:"Pide cita para tu mascota o pregunta por las urgencias 24 h.", u:"https://nexusforgeia.github.io/WHITEMOON-VETERINARIOS/", k:"veterinario mascotas animales clinica"},
     {s:"Abogados", a:"LEX", d:"Cuenta tu caso —civil, penal, laboral o mercantil— y pide consulta.", u:"https://nexusforgeia.github.io/WHITEMOON-ABOGADOS/", k:"abogado despacho legal juridico gestoria documentacion"},
     {s:"Inmobiliarias", a:"Carlos", d:"Te lleva paso a paso hasta la valoración de la vivienda.", u:"https://nexusforgeia.github.io/WHITEMOON-INMOBILIARIAS/", k:"inmobiliaria pisos vivienda casas agente"},
     {s:"Talleres de coches", a:"Diego", d:"Revisión, frenos, diagnosis o chapa: te reserva cita en el taller.", u:"https://nexusforgeia.github.io/WHITEMOON-TALLERES-COCHES/", k:"taller coches mecanico automocion vehiculo"},
+    {s:"Autoescuelas", a:"Marta", d:"Pregunta por el carnet que quieres —coche, moto o intensivo— y pide plaza.", u:"https://nexusforgeia.github.io/WHITEMOON-AUTOESCUELAS/", k:"autoescuela autoescuelas carnet carne conducir permiso coche moto practicas clases examen trafico"},
     {s:"Cerrajeros", a:"Asistente 24 h", d:"Distingue si es apertura, bombín o alta seguridad y avisa al cerrajero.", u:"https://nexusforgeia.github.io/WHITEMOON-CERRAJEROS/", k:"cerrajero cerrajeria urgencias puerta llaves"},
     {s:"Electricistas", a:"Watio", d:"Instalación, placas solares, recarga eléctrica o urgencia 24 h.", u:"https://nexusforgeia.github.io/WHITEMOON-ELECTRICISTAS/", k:"electricista electricidad placas solares reformas obra"},
     {s:"Servicios técnicos SAT", a:"Alex", d:"Asigna el aviso al técnico de tu zona según el tipo de trabajo.", u:"https://nexusforgeia.github.io/WHITEMOON-WEBSERVICE-DEMO/", k:"sat servicio tecnico averias reparaciones mantenimiento reformas"},
@@ -1107,13 +1110,30 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   var demoCount = $("#demo-count");
   var demoEmpty = $("#demo-empty");
 
+  /* Se busca palabra a palabra, no la frase entera: el comercial escribe como
+     habla ("clínica dental", "permiso de conducir") y antes eso no encontraba
+     nada porque el texto tenía que coincidir seguido. Las palabras de enlace
+     se ignoran, salvo que la búsqueda sea solo eso. */
+  var VACIAS = " de del la el los las y o en con para un una al ";
+
+  function terminos(filter){
+    var t = norm(filter || "").trim().split(/\s+/).filter(Boolean);
+    var utiles = t.filter(function(w){ return VACIAS.indexOf(" " + w + " ") === -1; });
+    return utiles.length ? utiles : t;
+  }
+
   function renderDemos(filter){
-    var q = norm(filter||"").trim();
+    var q = terminos(filter);
     var html = "";
     var shown = 0;
     for(var i=0;i<DEMOS.length;i++){
       var d = DEMOS[i];
-      if(q && norm(d.s + " " + d.a + " " + d.k).indexOf(q) === -1) continue;
+      var heno = norm(d.s + " " + d.a + " " + d.k);
+      var encaja = true;
+      for(var t=0;t<q.length;t++){
+        if(heno.indexOf(q[t]) === -1){ encaja = false; break; }
+      }
+      if(!encaja) continue;
       shown++;
       html += '<a class="demo" href="' + esc(d.u) + '" target="_blank" rel="noopener">'
             +   '<span class="demo__top">'
