@@ -392,11 +392,15 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   .ghost{right:1%;top:-42px}
   .contact{grid-template-columns:repeat(3,1fr)}
 }
-/* En pantallas muy estrechas el contador cede el sitio a los puntos de progreso;
-   sigue anunciándose para lectores de pantalla. */
-@media(max-width:359px){
-  .counter span[aria-hidden]{display:none}
-  .brand b{font-size:.85rem}
+/* Los 7 puntos ocupan 168 px fijos (24 px cada uno por accesibilidad táctil).
+   Por debajo de 480 px el nombre de la marca cede ese sitio: queda la luna como
+   identidad —y en la portada el nombre se ve a pantalla completa—, pero se sigue
+   anunciando a lectores de pantalla. Así la cabecera no se recorta ni a 320 px. */
+@media(max-width:479px){
+  .brand b{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;
+  }
 }
 @media(max-width:599px){
   thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
