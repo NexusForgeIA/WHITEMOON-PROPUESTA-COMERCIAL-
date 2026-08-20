@@ -55,8 +55,34 @@ cambia, hay que actualizar `PACKS` — nunca al revés.
 
 Las respuestas del paso 4 son texto plano en el HTML. **No inventes datos ahí**: cada
 cifra (5-7 días, 48 h, 499 €, dominio primer año, SSL + hosting + mantenimiento) está
-contrastada con whitemoon.es. No hay garantía de devolución en el sitio, así que la
-respuesta de "¿y si no me sirve?" no promete ninguna.
+contrastada con whitemoon.es.
+
+## Garantía de puesta en marcha
+
+> Si en 7 días laborables no lo tienes funcionando en tu web, no empiezas a pagar la
+> cuota mensual.
+
+Es **la única garantía** que ofrece la página. No hay devolución del setup ni ninguna otra
+promesa: el setup es un pago único por trabajo hecho. Si alguien añade otra garantía aquí,
+tiene que estar publicada antes en whitemoon.es.
+
+Aparece en tres sitios, todos desde el mismo texto:
+
+- la duda "¿Y si luego veo que no me sirve?" y la de "¿Cuánto tarda?" (paso 4),
+- el micro-sello junto al precio de cada pack y en el resultado del paso 5,
+- el bloque del paso 8.
+
+El plazo de 7 días laborables es el **extremo alto** del "5-7 días laborables" que ya
+usaban las fichas de pack, así que no se contradicen: la garantía cubre el peor caso.
+
+### A qué packs se les pone el sello
+
+Lo controla el campo `warranty:true` en `PACKS`. Lo llevan los ocho packs que tienen
+**puesta en marcha y cuota mensual**. Se quedan fuera a propósito:
+
+- **Pack Ads** — no tiene setup, así que no hay puesta en marcha que garantizar.
+- **Auditoría GEO IA** — es un pago único de 899 € sin cuota mensual, así que "no empiezas
+  a pagar la cuota" no querría decir nada. Su plazo propio son 48 h.
 
 ## Notas técnicas
 

@@ -318,6 +318,41 @@ h3{font-size:1.05rem;line-height:1.3;letter-spacing:-.02em}
 .faq__body p + p{margin-top:10px}
 .faq__body .btn{margin-top:14px;min-height:48px;padding:12px 20px;font-size:.9rem}
 
+/* ---------- Garantía de puesta en marcha ----------
+   Verde de acento sobre un fondo apenas teñido: destaca sin gritar y mantiene
+   contraste de sobra (8,2:1 el texto verde sobre el fondo compuesto). */
+.pledge{
+  margin:26px 0 0;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid rgba(0,212,170,.34);
+  background:rgba(0,212,170,.10);
+  color:var(--text);
+  font-size:.9rem;
+  line-height:1.6;
+}
+/* Dentro del acordeón manda `.faq__body p`, más específico que `.pledge` a secas:
+   se sube la especificidad en vez de recurrir a !important. */
+.faq__body p.pledge{margin:12px 0 0;color:var(--text);font-size:.9rem;line-height:1.6}
+.pledge b{color:var(--g);font-weight:700}
+.pledge__tag{
+  display:block;margin-bottom:5px;
+  font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--g);
+}
+/* Micro-sello junto al precio */
+.seal{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-top:12px;padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(0,212,170,.32);
+  background:rgba(0,212,170,.09);
+  color:var(--g);
+  font-size:.68rem;font-weight:700;letter-spacing:.04em;line-height:1.3;
+}
+.seal svg{width:13px;height:13px;flex:none}
+.seal--wide{display:flex;border-radius:12px;padding:12px 14px;font-size:.76rem;letter-spacing:0}
+
 /* ---------- Diagnóstico ---------- */
 .q{border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);padding:22px 20px;margin:0 0 14px}
 .q.is-answered{border-color:rgba(0,212,170,.35)}
@@ -638,6 +673,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
           <summary><h3>¿Y si luego veo que no me sirve?</h3></summary>
           <div class="faq__body">
             <p>Lo dejas. No hay permanencia y la cuota se para cuando tú lo digas. La puesta en marcha sí es un pago único por el trabajo ya hecho, así que lo justo es que lo pruebes antes: para eso están las demos.</p>
+            <p class="pledge"><span class="pledge__tag">Puesta en marcha garantizada</span> Si en <b>7 días laborables</b> no lo tienes funcionando en tu web, no empiezas a pagar la cuota mensual.</p>
             <p>Y si por lo que nos cuentas vemos que hoy no te compensa, preferimos decírtelo a venderte algo que no vas a usar.</p>
           </div>
         </details>
@@ -646,7 +682,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
           <summary><h3>¿Cuánto tarda en estar funcionando?</h3></summary>
           <div class="faq__body">
             <p>Entre cinco y siete días laborables en la mayoría de los packs. El Mini Core y el WhiteMoon 360 rondan la semana, y la Auditoría GEO IA se entrega en 48 horas.</p>
-            <p>No son meses ni hay que rehacer nada de lo que ya tienes.</p>
+            <p>Y ese plazo no es un cálculo optimista: si a los <b>7 días laborables</b> no lo tienes funcionando en tu web, no empiezas a pagar la cuota mensual. No son meses ni hay que rehacer nada de lo que ya tienes.</p>
           </div>
         </details>
 
@@ -750,6 +786,11 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       <h2>Tu siguiente<br><span class="grad">paso</span></h2>
       <p class="lead" id="close-lead">Media hora, tu sector encima de la mesa y te enseñamos el agente funcionando con casos tuyos. Si al terminar no lo ves, no pasa absolutamente nada.</p>
 
+      <p class="pledge">
+        <span class="pledge__tag">Puesta en marcha garantizada</span>
+        Si en <b>7 días laborables</b> no lo tienes funcionando en tu web, no empiezas a pagar la cuota mensual. Y ningún pack tiene permanencia.
+      </p>
+
       <div class="close__cta">
         <a class="btn btn--g btn--xl" href="https://cal.com/whitemoon" target="_blank" rel="noopener">
           Agendar reunión
@@ -831,7 +872,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
 
   var PACKS = [
     {
-      id:"spark", name:"Spark", forWho:"Ya tienes web",
+      id:"spark", warranty:true, name:"Spark", forWho:"Ya tienes web",
       tag:"Chatbot conversacional completo con IA. Tu negocio atiende clientes 24/7 sin esfuerzo.",
       big:"499€", small:"+ 99€/mes", sub:"Setup único · Sin permanencia · Operativo en una semana",
       desde:"499€ setup + 99€/mes",
@@ -840,7 +881,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       items:["Agente IA conversacional 24/7","Recoge solo los datos de quien pregunta","Aviso al móvil de cada persona interesada","Flujo conversacional específico del sector","Te llega quién es y qué necesita, con la conversación entera"]
     },
     {
-      id:"mini-core", name:"Pack Mini Core", forWho:"Autónomos sin web",
+      id:"mini-core", warranty:true, name:"Pack Mini Core", forWho:"Autónomos sin web",
       tag:"Tu presencia online lista en una semana: landing profesional y un agente IA que atiende a cada cliente y te avisa al móvil.",
       big:"599€", small:"+ 99€/mes", sub:"Setup único · Sin permanencia · Operativo en ~1 semana",
       desde:"599€ setup + 99€/mes",
@@ -849,7 +890,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       items:["Landing profesional a medida","Dominio propio incluido (primer año)","Agente IA básico (chatbot en la landing)","Chatbot de 3 acciones: responde dudas, recoge nombre y teléfono, y deriva al contacto","Aviso al instante en tu móvil de cada contacto"]
     },
     {
-      id:"orion-agent", name:"Orion IA Agent", forWho:"Gestión de citas",
+      id:"orion-agent", warranty:true, name:"Orion IA Agent", forWho:"Gestión de citas",
       tag:"Agente de voz IA 24/7 sobre la web que ya tienes. Gestiona citas y recoge contactos sin que intervenga nadie.",
       big:"799€", small:"+ 99€/mes", sub:"Setup único · Sin permanencia · Operativo en 5-7 días",
       desde:"799€ setup + 99€/mes",
@@ -858,7 +899,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       items:["Agente de voz 24/7 en español natural","Gestiona citas desde tu web sin intervención humana","Recoge nombre, teléfono y motivo de la consulta","Integración con Cal.com para agenda automática","Flujo conversacional específico de tu sector"]
     },
     {
-      id:"core", name:"Core Spark Web", forWho:"Web + chat IA",
+      id:"core", warranty:true, name:"Core Spark Web", forWho:"Web + chat IA",
       tag:"Web profesional + dominio + Agente Spark conversacional 24/7 + SEO/GEO/AEO completo desde el día 1.",
       big:"899€", small:"+ 99€/mes", sub:"Setup único · Sin permanencia · Operativo en 5-7 días",
       desde:"899€ setup + 99€/mes",
@@ -867,7 +908,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       items:["Web profesional + dominio primer año incluido","SSL + hosting + mantenimiento técnico","Agente Spark conversacional 24/7","Sistema de reservas y citas online","SEO técnico + GEO/AEO · visible en ChatGPT, Grok y Perplexity"]
     },
     {
-      id:"core-orion", name:"Core Orion", forWho:"Web + voz IA",
+      id:"core-orion", warranty:true, name:"Core Orion", forWho:"Web + voz IA",
       tag:"Web profesional + dominio + Orion IA voz 24/7 + SEO/GEO/AEO. Tu negocio online y automatizado con voz desde el día 1.",
       big:"1.499€", small:"+ 99€/mes", sub:"Setup único · Sin permanencia · Operativo en 5-7 días",
       desde:"1.499€ setup + 99€/mes",
@@ -876,7 +917,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       items:["Web profesional + dominio primer año incluido","SSL + hosting + mantenimiento técnico","Orion IA — agente de voz 24/7 en tu web","Gestiona citas y llamadas sin intervención humana","SEO técnico + GEO/AEO · visible en ChatGPT, Grok y Perplexity"]
     },
     {
-      id:"wm360", name:"WhiteMoon 360", forWho:"Negocio con equipo",
+      id:"wm360", warranty:true, name:"WhiteMoon 360", forWho:"Negocio con equipo",
       tag:"Tu negocio entero en un sistema: la web capta el aviso o la cita, el agente IA de chat lo clasifica, tu equipo lo recibe en su móvil y tú lo gestionas desde tu propio panel.",
       big:"1.899€", small:"+ 199€/mes", sub:"Setup único · Sin permanencia · Operativo en 7 días",
       desde:"1.899€ setup + 199€/mes",
@@ -885,7 +926,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       items:["Web profesional completa + dominio primer año","Agente IA de chat 24/7 que atiende, clasifica y agenda","CRM de gestión en tu propio dominio","Reparto automático del trabajo por zona y especialidad","Panel de KPIs y enlace de reseña Google automático"]
     },
     {
-      id:"core-rag", name:"Core RAG", forWho:"Mucha documentación",
+      id:"core-rag", warranty:true, name:"Core RAG", forWho:"Mucha documentación",
       tag:"Agente IA entrenado con tus documentos, procedimientos y normativa. Responde como un experto de tu empresa.",
       big:"2.499€", small:"+ 199€/mes", sub:"Setup único · Sin permanencia",
       desde:"2.499€ setup + 199€/mes",
@@ -912,7 +953,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       items:["Análisis completo SEO/GEO/AEO (35 checks)","Informe PDF profesional","Entrega en 48 h","Visibilidad en ChatGPT, Grok y Perplexity"]
     },
     {
-      id:"itp", name:"Calculadora ITP Pro", forWho:"Gestorías y administradores",
+      id:"itp", warranty:true, name:"Calculadora ITP Pro", forWho:"Gestorías y administradores",
       tag:"Instala la calculadora ITP oficial del BOE 2026 en tu web con un simple script.",
       big:"599€", small:"+ 99€/mes", sub:"Por licencia · Sin permanencia",
       desde:"599€ setup + 99€/mes por licencia",
@@ -948,6 +989,19 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   /* ==========================================================
      Utilidades
      ========================================================== */
+  /* Sello de garantía. Solo lo llevan los packs con puesta en marcha y cuota:
+     en Pack Ads no hay setup que garantizar y la Auditoría GEO IA no tiene cuota
+     mensual que dejar de pagar, así que ahí la frase no querría decir nada. */
+  var SEAL_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" '
+    + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+    + '<path d="M12 3l7 3v5.5c0 4.2-2.9 7.6-7 8.5-4.1-.9-7-4.3-7-8.5V6l7-3Z"/>'
+    + '<path d="m9 12 2 2 4-4"/></svg>';
+
+  function seal(wide){
+    return '<p class="seal' + (wide ? ' seal--wide' : '') + '">' + SEAL_SVG
+         + '<span>Puesta en marcha garantizada · Sin permanencia</span></p>';
+  }
+
   var $ = function(s,c){return (c||document).querySelector(s);};
   var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
 
@@ -1023,6 +1077,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
             +   '<p class="pack__tag">' + esc(p.tag) + '</p>'
             +   '<p class="pack__price">' + esc(p.big) + '<small>' + esc(p.small) + '</small></p>'
             +   '<p class="pack__sub">' + esc(p.sub) + '</p>'
+            +   (p.warranty ? seal(false) : '')
             +   '<ul>' + items + '</ul>'
             +   '<a class="pack__link" href="' + esc(p.url) + '" target="_blank" rel="noopener">Ver detalles de ' + esc(p.name)
             +     '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>'
@@ -1096,6 +1151,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       + '<h3>' + esc(p.name) + '</h3>'
       + '<p class="result__price">' + esc(p.big) + ' <span style="font-size:.62em;color:#8888a0">' + esc(p.small) + '</span>'
       +   '<small>' + esc(p.sub) + '</small></p>'
+      + (p.warranty ? seal(true) : '')
       + '<p class="result__why">' + esc(r.why) + '</p>'
       + '<p class="result__alt">Si algún día quieres ir un paso más allá: <b>' + esc(alt.name) + '</b> (' + esc(alt.desde) + ') ' + esc(r.altWhy) + '</p>'
       + '<div class="result__cta">'
