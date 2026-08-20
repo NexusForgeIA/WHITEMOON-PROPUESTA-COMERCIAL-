@@ -318,7 +318,6 @@ h3{font-size:1.05rem;line-height:1.3;letter-spacing:-.02em}
 .packs{grid-template-columns:1fr;margin-top:26px}
 .pack{display:flex;flex-direction:column;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;position:relative}
 .pack.is-reco{
-  order:-1;
   border-color:var(--g);
   background:linear-gradient(160deg,rgba(0,212,170,.10),var(--bg3) 58%);
   box-shadow:0 0 0 1px rgba(0,212,170,.25), 0 20px 50px -30px rgba(0,212,170,.7);
@@ -880,9 +879,19 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
      Pintado: packs + tabla
      ========================================================== */
   function renderPacks(recoId){
+    // El recomendado se coloca primero en el propio DOM, no con `order` de CSS:
+    // así el orden que se ve, el de tabulación y el que lee un lector de pantalla
+    // son el mismo (WCAG 1.3.2).
+    var lista = PACKS.slice();
+    if(recoId){
+      lista.sort(function(a,b){
+        return (b.id === recoId) - (a.id === recoId);
+      });
+    }
+
     var html = "";
-    for(var i=0;i<PACKS.length;i++){
-      var p = PACKS[i];
+    for(var i=0;i<lista.length;i++){
+      var p = lista[i];
       var reco = p.id === recoId;
       var items = "";
       for(var j=0;j<p.items.length;j++){ items += "<li>" + esc(p.items[j]) + "</li>"; }
