@@ -8,9 +8,14 @@
 <title>Guía de venta · WhiteMoon</title>
 <meta name="description" content="Herramienta interna de WhiteMoon Agencia IA para acompañar al cliente: demos reales, diagnóstico del pack y cierre.">
 <meta name="theme-color" content="#08080d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%239d70ff' d='M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1Z'/%3E%3Ccircle cx='17.6' cy='5.4' r='1.9' fill='%2300d4aa'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap">
+<!-- La hoja de fuentes se carga sin bloquear el render: el texto pinta ya con la
+     tipografía del sistema y Sora entra en cuanto llega (font-display: swap). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" media="print" onload="this.media='all';this.onload=null">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap"></noscript>
 <style>
 /* ============================================================
    WhiteMoon · Guía de venta — sistema visual
@@ -82,16 +87,24 @@ a{color:var(--p2)}
 .brand svg{width:22px;height:22px;display:block}
 .brand b{font-size:.95rem;font-weight:700;letter-spacing:-.02em}
 .brand b span{color:var(--p2)}
-.dots{display:flex;align-items:center;gap:6px;margin-left:auto}
+.dots{display:flex;align-items:center;gap:0;margin-left:auto}
+/* El botón mide 24x24 (mínimo táctil accesible) aunque el punto se vea pequeño:
+   el área de toque es el botón entero, no el círculo pintado. */
 .dot{
   appearance:none;-webkit-appearance:none;border:0;padding:0;cursor:pointer;
+  width:24px;height:24px;flex:none;
+  background:none;border-radius:50%;position:relative;
+}
+.dot::before{
+  content:"";position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
   width:10px;height:10px;border-radius:50%;
-  background:rgba(255,255,255,.2);
+  background:rgba(255,255,255,.22);
   transition:width .3s var(--ease), background .3s var(--ease);
 }
-.dot:hover{background:rgba(255,255,255,.45)}
-.dot.is-done{background:var(--p)}
-.dot.is-now{width:26px;border-radius:5px;background:var(--g)}
+.dot:hover::before{background:rgba(255,255,255,.5)}
+.dot.is-done::before{background:var(--p2)}
+.dot.is-now::before{width:20px;border-radius:5px;background:var(--g)}
 .counter{
   flex:none;font-size:.72rem;font-weight:700;letter-spacing:.12em;
   color:var(--muted);font-variant-numeric:tabular-nums;
@@ -379,6 +392,12 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   .ghost{right:1%;top:-42px}
   .contact{grid-template-columns:repeat(3,1fr)}
 }
+/* En pantallas muy estrechas el contador cede el sitio a los puntos de progreso;
+   sigue anunciándose para lectores de pantalla. */
+@media(max-width:359px){
+  .counter span[aria-hidden]{display:none}
+  .brand b{font-size:.85rem}
+}
 @media(max-width:599px){
   thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   tbody tr{display:block;margin-bottom:12px;padding:18px;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r)}
@@ -407,7 +426,11 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   .step.is-active .reveal:nth-child(2){animation-delay:.05s}
   .step.is-active .reveal:nth-child(3){animation-delay:.1s}
   .step.is-active .reveal:nth-child(4){animation-delay:.15s}
+  /* El h1 es el elemento LCP: se mueve, pero nunca parte de opacity 0,
+     así pinta en el primer frame en vez de esperar a la animación. */
+  .step.is-active h1.reveal{animation-name:riseFlat;animation-delay:0s}
   @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes riseFlat{from{transform:translateY(16px)}to{transform:none}}
 }
 </style>
 </head>
