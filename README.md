@@ -63,7 +63,8 @@ La respuesta de documentación tiene prioridad sobre las demás.
 
 Todo el contenido vive en `index.html`, en dos arrays al principio del `<script>`:
 
-- `DEMOS` — las 15 demos publicadas en https://whitemoon.es/demos/
+- `DEMOS` — las 18 demos en vivo. Las 15 de https://whitemoon.es/demos/ más tatuajes,
+  autoescuelas y psicología, que ya funcionan aunque todavía no estén en ese índice
 - `PACKS` — los 10 productos publicados en https://whitemoon.es/precios/
 
 **Los precios se cambian solo en `PACKS`.** De ahí salen a la vez las tarjetas de packs,
