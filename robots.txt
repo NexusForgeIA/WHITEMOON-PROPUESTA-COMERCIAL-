@@ -1,0 +1,30 @@
+# Guía de venta interna de WhiteMoon Agencia IA.
+# Herramienta comercial semi-privada: no debe indexarse ni competir
+# con whitemoon.es en buscadores ni en motores de respuesta IA.
+
+User-agent: *
+Disallow: /
+
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
