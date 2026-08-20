@@ -73,8 +73,9 @@ La fuente de verdad de precios es siempre https://whitemoon.es/precios/. Si esa 
 cambia, hay que actualizar `PACKS` — nunca al revés.
 
 Las respuestas del paso 4 son texto plano en el HTML. **No inventes datos ahí**: cada
-cifra (5-7 días, 48 h, 499 €, dominio primer año, SSL + hosting + mantenimiento) está
-contrastada con whitemoon.es.
+dato (5-7 días, 48 h, dominio primer año, SSL + hosting + mantenimiento) está contrastado
+con whitemoon.es. Y **no metas importes ahí**: el paso 4 va antes de la revelación de
+precios.
 
 ## Garantía de puesta en marcha
 
@@ -88,8 +89,8 @@ tiene que estar publicada antes en whitemoon.es.
 Aparece en tres sitios, todos desde el mismo texto:
 
 - la duda "¿Y si luego veo que no me sirve?" y la de "¿Cuánto tarda?" (paso 4),
-- el micro-sello junto al precio de cada pack y en el resultado del paso 5,
-- el bloque del paso 8.
+- el micro-sello de las tarjetas del paso 6 y del resultado del paso 5,
+- el bloque del paso 8, junto a los importes.
 
 El plazo de 7 días laborables es el **extremo alto** del "5-7 días laborables" que ya
 usaban las fichas de pack, así que no se contradicen: la garantía cubre el peor caso.
