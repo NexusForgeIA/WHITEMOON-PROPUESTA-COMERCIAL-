@@ -9,17 +9,26 @@
 <meta name="description" content="Vemos juntos qué puede hacer un agente IA por tu negocio: demos reales de tu sector, tus dudas resueltas y el pack que encaja contigo.">
 <meta name="theme-color" content="#08080d">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%239d70ff' d='M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1Z'/%3E%3Ccircle cx='17.6' cy='5.4' r='1.9' fill='%2300d4aa'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- La hoja de fuentes se carga sin bloquear el render: el texto pinta ya con la
-     tipografía del sistema y Sora entra en cuanto llega (font-display: swap). -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" media="print" onload="this.media='all';this.onload=null">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap"></noscript>
+<!-- Sora va alojada aquí, no en Google Fonts. Es una fuente variable, así que un
+     único archivo de 33 KB cubre los pesos 300-800. Al servirse del mismo origen no
+     hay DNS ni TLS extra, se puede precargar y llega antes de pintar: el titular no
+     se re-ajusta a media carga. De paso, la página no llama a un tercero. -->
+<link rel="preload" href="assets/fonts/sora-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* ============================================================
-   WhiteMoon · Guía de venta — sistema visual
+   WhiteMoon · sistema visual
    ============================================================ */
+@font-face{
+  font-family:"Sora";
+  src:url("assets/fonts/sora-latin-var.woff2") format("woff2-variations"),
+      url("assets/fonts/sora-latin-var.woff2") format("woff2");
+  font-weight:300 800;
+  font-style:normal;
+  font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+                U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,
+                U+2212,U+2215,U+FEFF,U+FFFD;
+}
 :root{
   --bg:#08080d;
   --bg2:#0e0e16;
