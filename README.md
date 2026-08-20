@@ -6,18 +6,37 @@ dudas y llega a lo que encaja con su negocio. El comercial acompaña, no expone.
 
 **Enlace:** https://nexusforgeia.github.io/WHITEMOON-PROPUESTA-COMERCIAL-/
 
-## Los 8 pasos
+## Los 9 pasos
 
 | # | Paso | Para qué sirve en la conversación |
 |---|---|---|
 | 1 | Portada | Abrir sin presión: "vamos a encontrar juntos lo que necesitas" |
-| 2 | ¿Te suena esto? | Que se reconozca en el problema, sin vender nada aún |
+| 2 | ¿Te suena esto? | Tiempo, consultas y trámites: que se reconozca, con un "haz la cuenta" en cada uno |
 | 3 | Así se vería en tu sector | Abrir la demo de **su** sector y que hable él con el agente |
-| 4 | Resolvemos tus dudas | Las 7 objeciones de siempre, en acordeón, para sacarlas antes de hablar de packs |
+| 4 | Resolvemos tus dudas | Las 7 objeciones de siempre, en acordeón, antes de hablar de dinero |
 | 5 | Encontremos lo que encaja | Tres preguntas respondidas por él |
-| 6 | Los packs | El que encaja aparece primero |
-| 7 | De un vistazo | Tabla para comparar |
-| 8 | Tu siguiente paso | Reunión, WhatsApp o teléfono, sin compromiso |
+| 6 | Los packs | Qué hace cada uno y para quién. **Sin importes** |
+| 7 | De un vistazo | Tabla para comparar. **Sin importes** |
+| 8 | Los precios | Aquí y solo aquí se revelan. "¿Por cuál te apetece empezar?" |
+| 9 | Tu siguiente paso | Reunión, WhatsApp o teléfono, sin compromiso |
+
+## Embudo de precio
+
+**Ningún importe aparece antes del paso 8.** Es deliberado: primero se ve el problema, se
+prueba el agente, se resuelven las dudas y se entiende qué hace cada pack; la cifra se lee
+al final, sabiendo ya lo que hay detrás.
+
+En la práctica eso significa que las tarjetas del paso 6, la tabla del 7 y el resultado del
+5 **no pintan los campos `big`, `small` ni `desde`** de `PACKS`, aunque los tengan cargados.
+Los enlaces "Ver detalles" a whitemoon.es también viven solo en el paso 8, porque esas
+páginas sí muestran precio.
+
+Lo que sí puede aparecer antes: el sello de garantía y `sub` (plazo y "sin permanencia"),
+porque no llevan cifras.
+
+Si tocas los render, la regla es una: **`big`, `small` y `desde` solo se usan en
+`renderPrecios()`**. Hay una comprobación fácil — recorrer los pasos y contar caracteres
+`€`: solo el paso 8 debe dar un número distinto de cero.
 
 Atajos: flechas ← / → para navegar, los puntos de la cabecera saltan a cualquier paso,
 `#paso-4` en la URL abre directamente ese paso.
@@ -54,8 +73,9 @@ La fuente de verdad de precios es siempre https://whitemoon.es/precios/. Si esa 
 cambia, hay que actualizar `PACKS` — nunca al revés.
 
 Las respuestas del paso 4 son texto plano en el HTML. **No inventes datos ahí**: cada
-cifra (5-7 días, 48 h, 499 €, dominio primer año, SSL + hosting + mantenimiento) está
-contrastada con whitemoon.es.
+dato (5-7 días, 48 h, dominio primer año, SSL + hosting + mantenimiento) está contrastado
+con whitemoon.es. Y **no metas importes ahí**: el paso 4 va antes de la revelación de
+precios.
 
 ## Garantía de puesta en marcha
 
@@ -69,8 +89,8 @@ tiene que estar publicada antes en whitemoon.es.
 Aparece en tres sitios, todos desde el mismo texto:
 
 - la duda "¿Y si luego veo que no me sirve?" y la de "¿Cuánto tarda?" (paso 4),
-- el micro-sello junto al precio de cada pack y en el resultado del paso 5,
-- el bloque del paso 8.
+- el micro-sello de las tarjetas del paso 6 y del resultado del paso 5,
+- el bloque del paso 8, junto a los importes.
 
 El plazo de 7 días laborables es el **extremo alto** del "5-7 días laborables" que ya
 usaban las fichas de pack, así que no se contradicen: la garantía cubre el peor caso.
@@ -93,8 +113,9 @@ Lo controla el campo `warranty:true` en `PACKS`. Lo llevan los ocho packs que ti
 - Sin imágenes raster: iconografía en SVG inline, así que no hay CLS ni peticiones extra.
 - Acordeón con `<details>`/`<summary>` nativos y la pregunta como `h3`, para navegar
   por encabezados con lector de pantalla.
-- Los 8 puntos de progreso miden 24×24 px (mínimo táctil). Por debajo de 480 px el
-  nombre de la marca se oculta visualmente para que la cabecera quepa.
+- Los 9 puntos de progreso miden 24×24 px (mínimo táctil) y suman 216 px fijos. Por debajo
+  de 480 px el nombre de la marca se oculta visualmente para que la cabecera quepa hasta
+  en pantallas de 320 px.
 - El pack que encaja se ordena **en el DOM**, no con `order` de CSS, para que el orden
   visual, el de tabulación y el del lector de pantalla coincidan.
 - Respeta `prefers-reduced-motion`. Un solo `<main>`, jerarquía h1 → h2 → h3, contraste AA.
