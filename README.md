@@ -18,7 +18,7 @@ dudas y llega a lo que encaja con su negocio. El comercial acompaña, no expone.
 | 6 | Los packs | Qué hace cada uno y para quién. **Sin importes** |
 | 7 | De un vistazo | Tabla para comparar. **Sin importes** |
 | 8 | Los precios | Aquí y solo aquí se revelan. "¿Por cuál te apetece empezar?" |
-| 9 | Tu siguiente paso | Reunión, WhatsApp o teléfono, sin compromiso |
+| 9 | Tu siguiente paso | Formulario que recoge sus datos y arranca el proyecto |
 
 ## Embudo de precio
 
@@ -105,9 +105,60 @@ Lo controla el campo `warranty:true` en `PACKS`. Lo llevan los ocho packs que ti
 - **Auditoría GEO IA** — es un pago único de 899 € sin cuota mensual, así que "no empiezas
   a pagar la cuota" no querría decir nada. Su plazo propio son 48 h.
 
+## El cierre del paso 9
+
+El paso 9 ya no es solo una invitación a hablar: es un **formulario** que recoge
+los datos del cliente (contacto, empresa, CIF, dirección completa, móvil, email
+y pack) y arranca el proyecto. Debajo, como alternativa secundaria, siguen la
+reunión, el WhatsApp y el teléfono, para quien todavía no quiere dejar sus datos.
+
+El pack llega **pre-elegido** con el que encaja según el paso 5, pero decide el
+cliente: en cuanto toca el desplegable, el diagnóstico deja de sobrescribirle la
+elección.
+
+### Qué pasa al enviar
+
+Se hacen **dos envíos en paralelo**, nunca encadenados — es la regla fija de
+WhiteMoon (`docs/regla-aviso-telegram.md`, en el repo de la web principal):
+
+1. **INSERT en `leads_web`** (Supabase `mlaqtniujnvfxcvcourm`) con la publishable
+   key, `sector` y `origen` = `propuesta-comercial`, **con un reintento a los
+   800 ms**: Supabase devuelve 503 transitorios y sin reintento ese lead se
+   pierde.
+2. **Aviso por Telegram** vía Edge Function **`propuesta-notify`**, con
+   `navigator.sendBeacon` y un Blob `text/plain;charset=UTF-8`. Con
+   `application/json` se dispara el preflight CORS, Chrome descarta el POST y
+   `sendBeacon` devuelve `true` igual: el aviso se perdería en silencio. El body
+   sigue siendo JSON y la función lo parsea igual. Fallback a `fetch` con
+   `keepalive`.
+
+Nunca CallMeBot y nunca WhatsApp para el aviso interno.
+
+`leads_web` no tiene una columna por cada campo del formulario, así que el resto
+viaja concatenado en `mensaje` (`Empresa: … | CIF: … | Email: … | Dirección: …`).
+**El esquema de la tabla no se toca.**
+
+### Claves
+
+En el cliente vive **solo la publishable key** de Supabase, que no es secreta:
+por RLS el rol anónimo únicamente puede hacer `INSERT` en `leads_web`. El token
+del bot de Telegram vive en los Secrets de la Edge Function
+(`TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID`), nunca en el repo.
+
+La función va con `verify_jwt:false` y con guard de lead incompleto: sin nombre
+**y** móvil devuelve 400 y no avisa. Su fuente está en
+`supabase/functions/propuesta-notify/index.ts`, calcada de `mudanzas-notify`.
+
+Para redesplegarla:
+
+```
+supabase functions deploy propuesta-notify --project-ref mlaqtniujnvfxcvcourm --no-verify-jwt
+```
+
 ## Notas técnicas
 
-- HTML/CSS/JS puros, sin dependencias ni build. Un solo archivo.
+- HTML/CSS/JS puros, sin dependencias ni build. Toda la página en `index.html`;
+  aparte, solo la Edge Function del aviso (`supabase/functions/propuesta-notify/`).
 - Mobile-first, breakpoints en 600 px y 900 px.
 - `noindex, nofollow` + `robots.txt` con `Disallow: /` para que no compita con
   whitemoon.es en Google ni en los motores de respuesta IA.

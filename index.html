@@ -40,6 +40,8 @@
   --g:#00d4aa;
   --text:#f0f0f5;
   --muted:#8888a0;
+  --field:rgba(255,255,255,.38);
+  --err:#ff8a94;
   --hdr:60px;
   --nav:78px;
   --r:16px;
@@ -506,6 +508,71 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
 .reviews p{margin:10px 0 0;font-size:.85rem;color:var(--muted);line-height:1.6}
 .foot{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.76rem;color:var(--muted);line-height:1.75}
 .foot b{color:var(--text);font-weight:700}
+/* ---------- Cierre con formulario ---------- */
+.lead-form{margin-top:34px}
+.lead-form__title{margin:0;font-size:1.15rem;color:var(--text)}
+.lead-form__hint{margin:8px 0 0;font-size:.85rem;color:var(--muted);line-height:1.65}
+.lead-form__grid{display:grid;gap:16px;margin-top:22px}
+/* `min-width:0` evita que un valor largo estire la celda del grid y saque
+   scroll horizontal en pantallas estrechas. */
+.field{display:grid;gap:7px;min-width:0}
+.field label{font-size:.82rem;font-weight:700;color:var(--text)}
+.field input,.field select{
+  width:100%;min-height:52px;
+  padding:13px 15px;
+  border:1px solid var(--field);
+  border-radius:12px;
+  background:var(--bg3);
+  color:var(--text);
+  /* 1rem = 16px: por debajo, iOS hace zoom al enfocar el campo. */
+  font-family:inherit;font-size:1rem;font-weight:500;line-height:1.4;
+  transition:border-color .2s var(--ease);
+}
+.field input:hover,.field select:hover{border-color:var(--p2)}
+/* El :focus-visible global redondea a 6px; aquí se mantiene el radio del campo
+   para que el borde no dé un salto al enfocarlo. */
+.field input:focus-visible,.field select:focus-visible{border-radius:12px;outline-offset:2px}
+.field select{
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  padding-right:46px;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238888a0' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 15px center;background-size:18px;
+}
+/* Sin esto el desplegable nativo se abre en blanco sobre blanco en Windows. */
+.field select option{background:#13131e;color:#f0f0f5}
+.field.is-bad input,.field.is-bad select{border-color:var(--err)}
+.field__err{margin:0;font-size:.78rem;font-weight:600;color:var(--err);display:none;line-height:1.5}
+.field.is-bad .field__err{display:block}
+.lead-form__go{margin-top:24px}
+.lead-form__go[disabled]{cursor:default;transform:none}
+.privacy{margin:14px 0 0;font-size:.78rem;color:var(--muted);line-height:1.65}
+.privacy a{color:var(--p2)}
+.lead-form.is-sent .lead-form__grid,
+.lead-form.is-sent .lead-form__go{opacity:.5}
+
+/* Tarjeta de confirmación: el contenedor vive siempre en el DOM (vacío) para
+   que el lector de pantalla anuncie el texto al inyectarlo. */
+.confirm{
+  margin-top:30px;padding:26px 22px;
+  display:grid;gap:14px;justify-items:start;
+  border:1px solid var(--g);border-radius:var(--r);
+  background:linear-gradient(150deg,rgba(0,212,170,.13),rgba(0,212,170,.03));
+}
+.confirm__check{
+  width:46px;height:46px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--g);color:#06110e;
+}
+.confirm__check svg{width:26px;height:26px}
+.confirm h3{margin:0;font-size:1.2rem;color:var(--text)}
+.confirm p{margin:0;font-size:.95rem;color:var(--muted);line-height:1.65}
+
+/* Alternativa secundaria: para quien todavía no quiere dejar sus datos. */
+.alt{margin-top:40px;padding-top:30px;border-top:1px solid var(--line)}
+.alt h3{margin:0;font-size:1rem;color:var(--text)}
+.alt p{margin:9px 0 0;font-size:.88rem;color:var(--muted);line-height:1.65}
+.alt .close__cta{margin-top:22px}
+
 .noscript{margin:20px;padding:20px;border:1px solid var(--p);border-radius:var(--r);background:var(--bg3);color:var(--text)}
 
 /* ---------- Responsive ---------- */
@@ -515,6 +582,8 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   .stats{grid-template-columns:repeat(3,1fr)}
   .opts{grid-template-columns:repeat(2,1fr)}
   .close__cta{grid-template-columns:repeat(2,1fr)}
+  .lead-form__grid{grid-template-columns:repeat(2,1fr)}
+  .field--wide{grid-column:1/-1}
   .result__cta{grid-template-columns:repeat(2,1fr)}
   .cover__cta{max-width:330px}
   .btn--xl{width:auto;padding-inline:44px}
@@ -866,37 +935,126 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       <span class="ghost" aria-hidden="true">09</span>
       <p class="eyebrow">Sin compromiso</p>
       <h2>Tu siguiente<br><span class="grad">paso</span></h2>
-      <p class="lead" id="close-lead">Media hora, tu sector encima de la mesa y te enseñamos el agente funcionando con casos tuyos. Si al terminar no lo ves, no pasa absolutamente nada.</p>
+      <p class="lead" id="close-lead">Tu siguiente paso: tomamos tus datos y empezamos con tu proyecto. En menos de una semana lo tienes funcionando.</p>
 
       <p class="pledge">
         <span class="pledge__tag">Puesta en marcha garantizada</span>
         Si en <b>7 días laborables</b> no lo tienes funcionando en tu web, no empiezas a pagar la cuota mensual. Y ningún pack tiene permanencia.
       </p>
 
-      <div class="close__cta">
-        <a class="btn btn--g btn--xl" href="https://cal.com/whitemoon" target="_blank" rel="noopener">
-          Agendar reunión
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </a>
-        <a class="btn btn--p btn--xl" href="https://wa.me/34643199580" target="_blank" rel="noopener">
-          Escribir por WhatsApp
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </a>
-      </div>
+      <!-- Los datos van a leads_web (Supabase) y el aviso sale por Telegram desde
+           la Edge Function propuesta-notify. Aquí no vive ninguna clave secreta:
+           la publishable key solo puede hacer INSERT, por RLS. -->
+      <form class="lead-form" id="lead-form" aria-labelledby="lead-form-title" novalidate>
+        <h3 class="lead-form__title" id="lead-form-title">Tus datos</h3>
+        <p class="lead-form__hint">Todos los campos son obligatorios: con esto ya podemos ponernos.</p>
 
-      <div class="contact">
-        <a href="tel:+34643199580">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"/></svg>
-          <span>643 199 580<em>Llamar ahora</em></span>
-        </a>
-        <a href="mailto:comercial@whitemoon.es">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>
-          <span>comercial@whitemoon.es<em>Escribir un correo</em></span>
-        </a>
-        <a href="https://whitemoon.es/precios/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3.5 12h17M12 3.2a15 15 0 0 1 0 17.6M12 3.2a15 15 0 0 0 0 17.6"/></svg>
-          <span>whitemoon.es<em>Ver precios y packs</em></span>
-        </a>
+        <div class="lead-form__grid">
+          <div class="field">
+            <label for="f-nombre">Nombre de contacto</label>
+            <input id="f-nombre" name="nombre" type="text" autocomplete="name" autocapitalize="words" required aria-describedby="e-nombre">
+            <p class="field__err" id="e-nombre"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-empresa">Empresa</label>
+            <input id="f-empresa" name="empresa" type="text" autocomplete="organization" autocapitalize="words" required aria-describedby="e-empresa">
+            <p class="field__err" id="e-empresa"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-cif">CIF / NIF</label>
+            <input id="f-cif" name="cif" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" required aria-describedby="e-cif">
+            <p class="field__err" id="e-cif"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-movil">Móvil</label>
+            <input id="f-movil" name="movil" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="e-movil">
+            <p class="field__err" id="e-movil"></p>
+          </div>
+
+          <div class="field field--wide">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" required aria-describedby="e-email">
+            <p class="field__err" id="e-email"></p>
+          </div>
+
+          <div class="field field--wide">
+            <label for="f-direccion">Dirección</label>
+            <input id="f-direccion" name="direccion" type="text" autocomplete="street-address" required aria-describedby="e-direccion">
+            <p class="field__err" id="e-direccion"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-cp">Código postal</label>
+            <input id="f-cp" name="cp" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" required aria-describedby="e-cp">
+            <p class="field__err" id="e-cp"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-ciudad">Ciudad</label>
+            <input id="f-ciudad" name="ciudad" type="text" autocomplete="address-level2" autocapitalize="words" required aria-describedby="e-ciudad">
+            <p class="field__err" id="e-ciudad"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-provincia">Provincia</label>
+            <input id="f-provincia" name="provincia" type="text" autocomplete="address-level1" autocapitalize="words" required aria-describedby="e-provincia">
+            <p class="field__err" id="e-provincia"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-pack">Pack</label>
+            <!-- Las opciones se pintan desde PACKS y llega elegido el que encaja
+                 según el paso 5, pero decide el cliente. -->
+            <select id="f-pack" name="pack" required aria-describedby="e-pack"></select>
+            <p class="field__err" id="e-pack"></p>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--g btn--xl lead-form__go" id="lead-go">
+          <span id="lead-go-label">Empezar mi proyecto</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+
+        <p class="privacy">
+          Tus datos solo se usan para poner en marcha tu proyecto ·
+          <a href="https://whitemoon.es/politica-privacidad/" target="_blank" rel="noopener">Política de privacidad</a>
+        </p>
+      </form>
+
+      <div id="lead-status" role="status" aria-live="polite" tabindex="-1"></div>
+
+      <div class="alt">
+        <h3>¿Prefieres que lo hablemos antes?</h3>
+        <p>Media hora, tu sector encima de la mesa y te enseñamos el agente funcionando con casos tuyos. Si al terminar no lo ves, no pasa absolutamente nada.</p>
+
+        <div class="close__cta">
+          <a class="btn btn--ghost btn--xl" href="https://cal.com/whitemoon" target="_blank" rel="noopener">
+            Agendar reunión
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+          <a class="btn btn--ghost btn--xl" href="https://wa.me/34643199580" target="_blank" rel="noopener">
+            Escribir por WhatsApp
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+
+        <div class="contact">
+          <a href="tel:+34643199580">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"/></svg>
+            <span>643 199 580<em>Llamar ahora</em></span>
+          </a>
+          <a href="mailto:comercial@whitemoon.es">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>
+            <span>comercial@whitemoon.es<em>Escribir un correo</em></span>
+          </a>
+          <a href="https://whitemoon.es/precios/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3.5 12h17M12 3.2a15 15 0 0 1 0 17.6M12 3.2a15 15 0 0 0 0 17.6"/></svg>
+            <span>whitemoon.es<em>Ver precios y packs</em></span>
+          </a>
+        </div>
       </div>
 
       <div class="reviews">
@@ -1316,6 +1474,224 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
   });
 
   /* ==========================================================
+     Cierre con formulario — lead a Supabase + aviso a Telegram
+     ----------------------------------------------------------
+     Regla del proyecto (docs/regla-aviso-telegram.md): al cerrarse el lead se
+     hacen DOS envíos EN PARALELO, nunca encadenados:
+
+       1. INSERT en leads_web con la publishable key, con UN reintento a los
+          800 ms. Supabase devuelve 503 transitorios de forma esporádica y sin
+          reintento ese lead se pierde.
+       2. Aviso a Telegram por la Edge Function propuesta-notify, con
+          navigator.sendBeacon y Blob 'text/plain;charset=UTF-8'. Con
+          'application/json' se dispara el preflight CORS, Chrome descarta el
+          POST y sendBeacon devuelve true igual: el aviso se pierde en
+          silencio. El body sigue siendo JSON y la función lo parsea igual.
+          Fallback a fetch con keepalive.
+
+     La publishable key no es secreta: por RLS el rol anónimo solo puede
+     INSERT. El token de Telegram vive en los Secrets de la Edge Function,
+     nunca en el cliente.
+     ========================================================== */
+  var SUPABASE_URL = "https://mlaqtniujnvfxcvcourm.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_6no6BuOgiA_2nonTJntAuQ_DTqEgrcV";
+  var NOTIFY_FN    = SUPABASE_URL + "/functions/v1/propuesta-notify";
+  var SECTOR       = "propuesta-comercial";
+  var ORIGEN       = "propuesta-comercial";
+
+  var form        = $("#lead-form");
+  var packSelect  = $("#f-pack");
+  var statusBox   = $("#lead-status");
+  var goLabel     = $("#lead-go-label");
+  var packTouched = false;   // si el cliente elige pack a mano, el paso 5 ya no le pisa la elección
+  var enviado     = false;
+
+  var RE_EMAIL = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+  /* Móvil español: nueve cifras que empiezan por 6 o 7, con prefijo opcional. */
+  var RE_MOVIL = /^(?:\+?34|0034)?[67]\d{8}$/;
+  var RE_CP    = /^\d{5}$/;
+
+  function soloDigitos(v){ return String(v).replace(/[\s.\-()]/g, ""); }
+
+  var CAMPOS = [
+    {id:"nombre",    err:"Dinos cómo te llamas."},
+    {id:"empresa",   err:"Falta el nombre de tu empresa."},
+    {id:"cif",       err:"Falta el CIF o el NIF."},
+    {id:"movil",     err:"Escribe un móvil de nueve cifras.", test:function(v){ return RE_MOVIL.test(soloDigitos(v)); }},
+    {id:"email",     err:"Revisa el correo, parece que le falta algo.", test:function(v){ return RE_EMAIL.test(v.trim()); }},
+    {id:"direccion", err:"Falta la dirección."},
+    {id:"cp",        err:"El código postal son cinco cifras.", test:function(v){ return RE_CP.test(soloDigitos(v)); }},
+    {id:"ciudad",    err:"Falta la ciudad."},
+    {id:"provincia", err:"Falta la provincia."},
+    {id:"pack",      err:"Elige el pack por el que quieres empezar."}
+  ];
+
+  function campoEl(c){ return $("#f-" + c.id); }
+
+  function valida(c){
+    var v = campoEl(c).value;
+    if(!String(v).trim()) return false;
+    return c.test ? c.test(v) : true;
+  }
+
+  function marca(c, ok){
+    var el = campoEl(c);
+    el.closest(".field").classList.toggle("is-bad", !ok);
+    if(ok){
+      el.removeAttribute("aria-invalid");
+      $("#e-" + c.id).textContent = "";
+    } else {
+      el.setAttribute("aria-invalid", "true");
+      $("#e-" + c.id).textContent = c.err;
+    }
+    return ok;
+  }
+
+  function pintaPacks(){
+    var html = '<option value="">Elige el pack</option>';
+    for(var i=0;i<PACKS.length;i++){
+      html += '<option value="' + esc(PACKS[i].id) + '">' + esc(PACKS[i].name) + '</option>';
+    }
+    packSelect.innerHTML = html;
+  }
+
+  /* El pack que encaja llega ya elegido, pero manda el cliente: en cuanto toca
+     el desplegable, el diagnóstico deja de sobrescribirle la elección. */
+  function syncPackSelect(){
+    if(enviado || packTouched) return;
+    packSelect.value = recommendedId || "";
+  }
+
+  function insertLead(lead, reintento){
+    fetch(SUPABASE_URL + "/rest/v1/leads_web", {
+      method: "POST",
+      keepalive: true,
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(lead)
+    })
+    .then(function(r){ if(!r.ok && !reintento) setTimeout(function(){ insertLead(lead, 1); }, 800); })
+    .catch(function(){ if(!reintento) setTimeout(function(){ insertLead(lead, 1); }, 800); });
+  }
+
+  function notificarTelegram(aviso){
+    var payload = JSON.stringify(aviso);
+    var sent = false;
+    try {
+      if(navigator.sendBeacon){
+        sent = navigator.sendBeacon(NOTIFY_FN, new Blob([payload], {type:"text/plain;charset=UTF-8"}));
+      }
+    } catch(e){}
+    if(!sent){
+      fetch(NOTIFY_FN, {
+        method: "POST",
+        keepalive: true,
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY
+        },
+        body: payload
+      }).catch(function(){ /* silencioso — el cliente no tiene que ver esto */ });
+    }
+  }
+
+  function bloquearForm(){
+    $$("#lead-form input, #lead-form select, #lead-form button").forEach(function(el){ el.disabled = true; });
+    form.classList.add("is-sent");
+    goLabel.textContent = "Datos enviados";
+  }
+
+  function confirmar(nombre){
+    statusBox.innerHTML =
+      '<div class="confirm">'
+      +   '<span class="confirm__check" aria-hidden="true">'
+      +     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m5 13 4.5 4.5L19 7"/></svg>'
+      +   '</span>'
+      +   '<h3>¡Listo, ' + esc(nombre) + '!</h3>'
+      +   '<p>Hemos recibido tus datos. Nos ponemos con tu proyecto y en menos de una semana estará funcionando.</p>'
+      + '</div>';
+    statusBox.focus();
+  }
+
+  function resetLeadForm(){
+    enviado = false;
+    packTouched = false;
+    form.reset();
+    CAMPOS.forEach(function(c){ marca(c, true); });
+    $$("#lead-form input, #lead-form select, #lead-form button").forEach(function(el){ el.disabled = false; });
+    form.classList.remove("is-sent");
+    goLabel.textContent = "Empezar mi proyecto";
+    statusBox.innerHTML = "";
+    syncPackSelect();
+  }
+
+  packSelect.addEventListener("change", function(){ packTouched = true; });
+
+  CAMPOS.forEach(function(c){
+    var el = campoEl(c);
+    /* El error se retira en cuanto el campo está bien; no se pinta de rojo
+       mientras el cliente todavía está escribiendo. */
+    el.addEventListener("input", function(){
+      if(el.closest(".field").classList.contains("is-bad") && valida(c)) marca(c, true);
+    });
+    el.addEventListener("blur", function(){
+      if(String(el.value).trim()) marca(c, valida(c));
+    });
+  });
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    if(enviado) return;
+
+    var primerFallo = null;
+    CAMPOS.forEach(function(c){
+      if(!marca(c, valida(c)) && !primerFallo) primerFallo = campoEl(c);
+    });
+    if(primerFallo){ primerFallo.focus(); return; }
+
+    var d = {};
+    CAMPOS.forEach(function(c){ d[c.id] = campoEl(c).value.trim(); });
+
+    var pack = packById(d.pack);
+    var packNombre = pack ? pack.name : d.pack;
+    var direccionCompleta = d.direccion + ", " + d.cp + " " + d.ciudad + " (" + d.provincia + ")";
+
+    /* leads_web no tiene una columna por cada dato del formulario, así que el
+       resto viaja concatenado en `mensaje`: el esquema se queda como está. */
+    var lead = {
+      nombre:   d.nombre,
+      telefono: d.movil,
+      sector:   SECTOR,
+      interes:  packNombre,
+      mensaje:  "Empresa: " + d.empresa + " | CIF: " + d.cif + " | Email: " + d.email
+              + " | Dirección: " + direccionCompleta,
+      origen:   ORIGEN
+    };
+
+    /* El aviso lleva los campos sueltos: Telegram los pinta uno a uno. */
+    var aviso = {
+      nombre: d.nombre, empresa: d.empresa, cif: d.cif, pack: packNombre,
+      telefono: d.movil, email: d.email,
+      direccion: d.direccion, cp: d.cp, ciudad: d.ciudad, provincia: d.provincia,
+      sector: SECTOR, origen: ORIGEN
+    };
+
+    insertLead(lead, 0);
+    notificarTelegram(aviso);
+
+    enviado = true;
+    bloquearForm();
+    confirmar(d.nombre);
+  });
+
+  pintaPacks();
+
+  /* ==========================================================
      Navegación por pasos
      ========================================================== */
   var steps = $$(".step");
@@ -1365,6 +1741,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
       history.replaceState(null, "", "#paso-" + n);
     }
 
+    syncPackSelect();
     window.scrollTo(0, 0);
 
     if(!opts || !opts.silent){
@@ -1387,6 +1764,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
     if(q) q.value = "";
     renderDemos("");
     renderResult();
+    resetLeadForm();
     show(1);
   }
 
@@ -1402,7 +1780,7 @@ tbody tr.is-reco th,tbody tr.is-reco td{background:rgba(0,212,170,.08)}
 
   document.addEventListener("keydown", function(ev){
     var tag = (ev.target && ev.target.tagName) ? ev.target.tagName.toLowerCase() : "";
-    if(tag === "input" || tag === "textarea" || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    if(tag === "input" || tag === "textarea" || tag === "select" || ev.metaKey || ev.ctrlKey || ev.altKey) return;
     if(ev.key === "ArrowRight"){ go(1); }
     else if(ev.key === "ArrowLeft"){ go(-1); }
   });
