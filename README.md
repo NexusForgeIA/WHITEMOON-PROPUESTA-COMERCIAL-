@@ -176,11 +176,18 @@ supabase functions deploy propuesta-notify --project-ref mlaqtniujnvfxcvcourm --
 
 ## El calendario de Cal.com
 
-Bajo el formulario, en "¿Prefieres que lo hablemos antes?", va el calendario de
+Bajo el formulario, en "Reserva tu reunión de contenidos", va el calendario de
 Cal.com **embebido inline** (`calLink: whitemoon/contenidos`, tema oscuro y el
 verde de la casa). El cliente elige día y hora sin salir de la página y la
-reserva cae en el Google Calendar de WhiteMoon. Debajo quedan WhatsApp,
-teléfono y email como alternativa.
+reserva cae en el Google Calendar de WhiteMoon. Debajo, bajo "O escríbenos
+directamente", quedan WhatsApp, teléfono y email.
+
+**El encabezado tiene que hablar de contenidos, no de dudas.** Esa cita sirve
+para repasar los textos de la web y coordinar las fotos: pasa *después* de
+contratar. Titularla "¿Prefieres que lo hablemos antes?" —como estuvo— la
+vendía como alternativa a dejar los datos, que es justo lo contrario. Si algún
+día se quiere ofrecer una llamada previa, hace falta **otro** tipo de evento en
+Cal.com, no reetiquetar este.
 
 **El script no viene con la página.** `https://app.cal.com/embed/embed.js` se
 inyecta cuando el hueco del calendario se acerca a la pantalla, con un
