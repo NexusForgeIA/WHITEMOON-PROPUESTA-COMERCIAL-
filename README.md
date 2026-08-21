@@ -109,12 +109,20 @@ Lo controla el campo `warranty:true` en `PACKS`. Lo llevan los ocho packs que ti
 
 El paso 9 ya no es solo una invitación a hablar: es un **formulario** que recoge
 los datos del cliente (contacto, empresa, CIF, dirección completa, móvil, email
-y pack) y arranca el proyecto. Debajo, como alternativa secundaria, siguen la
-reunión, el WhatsApp y el teléfono, para quien todavía no quiere dejar sus datos.
+y pack) y arranca el proyecto.
 
 El pack llega **pre-elegido** con el que encaja según el paso 5, pero decide el
 cliente: en cuanto toca el desplegable, el diagnóstico deja de sobrescribirle la
 elección.
+
+Bajo el botón, tres chips en verde: *Operativo en 7 días*, *Puesta en marcha
+garantizada* y *Sin permanencia*. **No dicen nada nuevo**: son el plazo, la
+garantía y la ausencia de permanencia que ya estaban publicados. Si alguien
+añade un cuarto chip, tiene que estar antes en whitemoon.es.
+
+El cierre no reabre el precio. Por eso **no hay enlace a whitemoon.es/precios**
+en este paso —el cliente ya vio los importes en el 8— y tampoco hay bloque de
+valoraciones: un hueco con "espacio reservado" resta más de lo que suma.
 
 ### Qué pasa al enviar
 
@@ -138,6 +146,17 @@ Nunca CallMeBot y nunca WhatsApp para el aviso interno.
 viaja concatenado en `mensaje` (`Empresa: … | CIF: … | Email: … | Dirección: …`).
 **El esquema de la tabla no se toca.**
 
+### Qué pasa ahora
+
+La tarjeta de confirmación cierra con tres pasos numerados: *te llamamos en
+menos de 24 h laborables*, *preparamos y configuramos tu agente* y *en menos de
+una semana, funcionando*. Van en un `<ol>`, así que el orden lo lleva el
+marcado y las bolitas numeradas son adorno (`aria-hidden`).
+
+Los dos últimos son la misma promesa de siempre. El primero —las 24 h
+laborables— es un compromiso de respuesta, no una garantía de producto: la
+única garantía sigue siendo la de puesta en marcha.
+
 ### Claves
 
 En el cliente vive **solo la publishable key** de Supabase, que no es secreta:
@@ -155,6 +174,32 @@ Para redesplegarla:
 supabase functions deploy propuesta-notify --project-ref mlaqtniujnvfxcvcourm --no-verify-jwt
 ```
 
+## El calendario de Cal.com
+
+Bajo el formulario, en "¿Prefieres que lo hablemos antes?", va el calendario de
+Cal.com **embebido inline** (`calLink: whitemoon/contenidos`, tema oscuro y el
+verde de la casa). El cliente elige día y hora sin salir de la página y la
+reserva cae en el Google Calendar de WhiteMoon. Debajo quedan WhatsApp,
+teléfono y email como alternativa.
+
+**El script no viene con la página.** `https://app.cal.com/embed/embed.js` se
+inyecta cuando el hueco del calendario se acerca a la pantalla, con un
+`IntersectionObserver` de `rootMargin: 600px`. Como el paso 9 está `hidden`
+hasta que se abre, los ocho pasos anteriores no pagan nada. Si el navegador no
+trae `IntersectionObserver`, se carga al abrirse el paso 9.
+
+Dos detalles que hay que mantener si se toca:
+
+- El embed monta el iframe por su cuenta y **no siempre le pone `title`**. Un
+  `MutationObserver` se lo pone en cuanto aparece; sin él, un lector de pantalla
+  anuncia un marco sin nombre.
+- Si a los 6 s no hay iframe (bloqueador, red caída), sale un enlace directo a
+  `cal.com/whitemoon/contenidos`. Mejor eso que dejar al cliente mirando un
+  hueco vacío.
+
+El `min-height` del hueco reserva el sitio antes de que monte el iframe, así que
+no hay salto de maquetación.
+
 ## Notas técnicas
 
 - HTML/CSS/JS puros, sin dependencias ni build. Toda la página en `index.html`;
@@ -163,6 +208,8 @@ supabase functions deploy propuesta-notify --project-ref mlaqtniujnvfxcvcourm --
 - `noindex, nofollow` + `robots.txt` con `Disallow: /` para que no compita con
   whitemoon.es en Google ni en los motores de respuesta IA.
 - Sin imágenes raster: iconografía en SVG inline, así que no hay CLS ni peticiones extra.
+- La única petición a un tercero es el embed de Cal.com, y solo en el paso 9. El
+  resto de la página no llama a nadie.
 - Acordeón con `<details>`/`<summary>` nativos y la pregunta como `h3`, para navegar
   por encabezados con lector de pantalla.
 - Los 9 puntos de progreso miden 24×24 px (mínimo táctil) y suman 216 px fijos. Por debajo
